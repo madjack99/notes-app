@@ -1,8 +1,32 @@
 import React, { useState } from 'react';
-import { useStore } from 'effector-react';
+import styled from '@emotion/styled';
 
 import { deleteNote, updateNote } from '../../stores/notes';
 import { startLoading, stopLoading } from '../../stores/loading';
+
+const NoteWrapper = styled.div`
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+`;
+
+const Button = styled.button`
+  margin: 0 10px 0 0;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  background-color: #2993ff;
+  cursor: pointer;
+  &:hover {
+    background-color: #25db18;
+  }
+`;
 
 interface INote {
   content: string;
@@ -50,18 +74,18 @@ const Note = ({ content, id }: INote) => {
 
     return (
       <form>
-        <textarea value={editContent} onChange={handleChange} />
+        <TextArea value={editContent} onChange={handleChange} />
       </form>
     );
   };
 
   return (
-    <div>
+    <NoteWrapper>
       {renderContent()}
-      <button onClick={handleDelete}>delete</button>
-      <button onClick={handleEdit}>update</button>
-      <button>pin</button>
-    </div>
+      <Button onClick={handleDelete}>delete</Button>
+      <Button onClick={handleEdit}>update</Button>
+      <Button>pin</Button>
+    </NoteWrapper>
   );
 };
 

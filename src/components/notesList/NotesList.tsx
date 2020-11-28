@@ -13,6 +13,7 @@ const NotesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 15px;
   max-width: 75%;
   margin: 10px auto;
 `;
