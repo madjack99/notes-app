@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useStore } from 'effector-react';
 
+import Spinner from '../spinner';
+
 import { $notes } from '../../stores/notes';
 import { $loading, stopLoading } from '../../stores/loading';
 
@@ -9,10 +11,10 @@ const NotesList = () => {
   const loading = useStore($loading);
 
   useEffect(() => {
-    setTimeout(stopLoading, 500);
+    setTimeout(stopLoading, 1000);
   });
 
-  return <div>{loading && 'spinner'}</div>;
+  return <div>{loading && <Spinner />}</div>;
 };
 
 export default NotesList;
