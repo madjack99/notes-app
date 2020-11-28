@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import Spinner from '../spinner';
 import Note from '../note';
+import AddNote from '../addNote';
 
 import { $notes, fetchNotes, INote } from '../../stores/notes';
 import { $loading, stopLoading } from '../../stores/loading';
@@ -28,7 +29,9 @@ const NotesList = () => {
   }, []);
 
   const renderNotesList = (notesToRender: INote[]) => {
-    if (notesToRender.length === 0) {
+    if (loading) {
+      return null;
+    } else if (notesToRender.length === 0) {
       return <p>There are no any notes</p>;
     } else {
       return notesToRender.map(({ content, id }) => (
@@ -39,8 +42,9 @@ const NotesList = () => {
 
   return (
     <NotesContainer>
+      <AddNote />
       <Spinner loading={loading} />
-      {!loading && renderNotesList(notes)}
+      {renderNotesList(notes)}
     </NotesContainer>
   );
 };
