@@ -22,6 +22,7 @@ const Button = styled.button`
   border-radius: 10px;
   outline: none;
   background-color: #2993ff;
+  color: white;
   cursor: pointer;
   &:hover {
     background-color: #25db18;
