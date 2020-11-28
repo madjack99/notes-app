@@ -1,8 +1,12 @@
 import { createStore, createEvent } from 'effector';
 
-interface INotes {
+export interface INote {
   content: string;
   id: number;
 }
 
-export const $notes = createStore<INotes[]>([]);
+export const fetchNotes = createEvent<INote[]>();
+
+export const $notes = createStore<INote[]>([]);
+
+$notes.on(fetchNotes, (_, fetchedNotes) => fetchedNotes);
