@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 const Div = styled.div`
   padding: 10px 15px;
-  background-color: #a6f8ff;
+  background-color: #2993ff;
   border-bottom: 1px solid black;
   box-shadow: 0px -2px 10px 1px;
   font-family: Arial, Helvetica, sans-serif;
