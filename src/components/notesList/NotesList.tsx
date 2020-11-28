@@ -61,8 +61,10 @@ const NotesList = () => {
       const filteredNotes = filterNotes(notesToRender);
       const filteredByTags = filterByTags(filteredNotes);
 
-      return filteredByTags.map(({ content, id, tags }) => (
-        <Note key={id} content={content} id={id} tags={tags} />
+      filteredByTags.sort((a, b) => +a.pinned - +b.pinned).reverse();
+
+      return filteredByTags.map(({ content, id, tags, pinned }) => (
+        <Note key={id} content={content} id={id} tags={tags} pinned={pinned} />
       ));
     }
   };

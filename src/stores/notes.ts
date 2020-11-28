@@ -4,6 +4,7 @@ export interface INote {
   content: string;
   id: string;
   tags: string[];
+  pinned: boolean;
 }
 
 export const fetchNotes = createEvent<INote[]>();
@@ -13,6 +14,8 @@ export const addNote = createEvent<INote>();
 export const deleteNote = createEvent<string>();
 
 export const updateNote = createEvent<INote>();
+
+export const togglePinned = createEvent<string>();
 
 export const $notes = createStore<INote[]>([]);
 
@@ -29,5 +32,16 @@ $notes
       } else {
         return note;
       }
+    });
+  })
+  .on(togglePinned, (state, targetNoteId) => {
+    return state.map((note) => {
+      if (note.id === targetNoteId) {
+        return {
+          ...note,
+          pinned: !note.pinned,
+        };
+      }
+      return note;
     });
   });

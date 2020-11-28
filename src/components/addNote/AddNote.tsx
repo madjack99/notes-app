@@ -64,6 +64,7 @@ const AddNote = () => {
     const newNote = {
       id: uuidv4(),
       tags: noteTags,
+      pinned: false,
       content,
     };
 

@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
-import { deleteNote, updateNote } from '../../stores/notes';
+import {
+  deleteNote,
+  updateNote,
+  togglePinned,
+  INote,
+} from '../../stores/notes';
 import { startLoading, stopLoading } from '../../stores/loading';
 
 const NoteWrapper = styled.div`
@@ -29,17 +34,17 @@ const Button = styled.button`
   }
 `;
 
-interface INote {
-  content: string;
-  id: string;
-  tags: string[];
-}
+type PinButtonProps = {
+  pinned: boolean;
+};
 
-const Note = ({ content, id, tags }: INote) => {
-  console.log('content', content);
+const PinButton = styled(Button)<PinButtonProps>`
+  background-color: ${(props) => (props.pinned ? '#994DDB' : '#2993ff')};
+`;
+
+const Note = ({ content, id, tags, pinned }: INote) => {
   const [editing, setEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
-  console.log('edit content', editContent);
 
   const handleDelete = () => {
     startLoading();
@@ -63,6 +68,7 @@ const Note = ({ content, id, tags }: INote) => {
           content: editContent,
           id,
           tags,
+          pinned,
         });
       }, 1000);
     }
@@ -93,7 +99,9 @@ const Note = ({ content, id, tags }: INote) => {
       {renderContent()}
       <Button onClick={handleDelete}>delete</Button>
       <Button onClick={handleEdit}>update</Button>
-      <Button>pin</Button>
+      <PinButton onClick={() => togglePinned(id)} pinned={pinned}>
+        {pinned ? 'unpin' : 'pin'}
+      </PinButton>
     </NoteWrapper>
   );
 };
