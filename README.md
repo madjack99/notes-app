@@ -7,3 +7,5 @@
 5. Search note by its text
 6. Add tags to notes
 7. Filter notes by tags
+
+[Live demo](https://elegant-shaw-1174e2.netlify.app)
