@@ -6,6 +6,7 @@ import Spinner from '../spinner';
 import Note from '../note';
 import AddNote from '../addNote';
 import TextFilter from '../filters/text';
+import TagFilter from '../filters/tag';
 
 import { $notes, fetchNotes, INote } from '../../stores/notes';
 import { $loading, stopLoading } from '../../stores/loading';
@@ -24,6 +25,7 @@ const NotesList = () => {
   const loading = useStore($loading);
 
   const [filterValue, setFilterValue] = useState('');
+  const [filterTagValue, setFilterTagValue] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
@@ -39,6 +41,17 @@ const NotesList = () => {
     });
   };
 
+  const filterByTags = (notesToFilter: INote[]) => {
+    if (filterTagValue === '') return notesToFilter;
+
+    const targetTags = filterTagValue.split(',').map((tag) => tag.trim());
+    return notesToFilter.filter((note) => {
+      return targetTags.every((targetTag) => {
+        return note.tags.includes(targetTag);
+      });
+    });
+  };
+
   const renderNotesList = (notesToRender: INote[]) => {
     if (loading) {
       return null;
@@ -46,8 +59,9 @@ const NotesList = () => {
       return <p>There are no any notes</p>;
     } else {
       const filteredNotes = filterNotes(notesToRender);
+      const filteredByTags = filterByTags(filteredNotes);
 
-      return filteredNotes.map(({ content, id, tags }) => (
+      return filteredByTags.map(({ content, id, tags }) => (
         <Note key={id} content={content} id={id} tags={tags} />
       ));
     }
@@ -57,6 +71,10 @@ const NotesList = () => {
     <NotesContainer>
       <AddNote />
       <TextFilter setFilterValue={setFilterValue} filterValue={filterValue} />
+      <TagFilter
+        setFilterTagValue={setFilterTagValue}
+        filterTagValue={filterTagValue}
+      />
       <Spinner loading={loading} />
       {renderNotesList(notes)}
     </NotesContainer>

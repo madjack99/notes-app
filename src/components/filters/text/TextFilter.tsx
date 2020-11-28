@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useStore } from 'effector-react';
+import styled from '@emotion/styled';
 
-import { $notes, INote } from '../../../stores/notes';
+import { $notes } from '../../../stores/notes';
+
+const Form = styled.form`
+  width: 100%;
+`;
+
+const Input = styled.input`
+  width: 100%;
+`;
 
 interface ITextFilter {
   setFilterValue: (filterValue: string) => void;
@@ -23,14 +32,14 @@ const TextFilter = ({ setFilterValue, filterValue }: ITextFilter) => {
     if (!notes.length) return null;
 
     return (
-      <form onSubmit={handleSubmit}>
-        <input
+      <Form onSubmit={handleSubmit}>
+        <Input
           type='text'
           placeholder='search for text in notes'
           value={filterValue}
           onChange={handleChange}
         />
-      </form>
+      </Form>
     );
   };
 
