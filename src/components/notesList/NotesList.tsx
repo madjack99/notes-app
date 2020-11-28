@@ -35,7 +35,7 @@ const NotesList = () => {
       return <p>There are no any notes</p>;
     } else {
       return notesToRender.map(({ content, id }) => (
-        <Note key={id} content={content} />
+        <Note key={id} content={content} id={id} />
       ));
     }
   };
