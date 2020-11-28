@@ -8,8 +8,11 @@ import { $loading, startLoading, stopLoading } from '../../stores/loading';
 
 const Form = styled.form`
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px 15px;
+  border: 1px solid black;
+  border-radius: 10px;
 `;
 
 type ButtonProps = {
@@ -32,20 +35,35 @@ const Button = styled.button<ButtonProps>`
 
 const AddNote = () => {
   let [content, setContent] = useState('');
+  let [tags, setTags] = useState('');
 
   const loading = useStore($loading);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setContent(value);
+    const { name } = e.target;
+    if (name === 'content') {
+      setContent(value);
+    } else {
+      setTags(value);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (content === '') return;
     startLoading();
+
+    let noteTags: string[];
+    if (tags === '') {
+      noteTags = [];
+    } else {
+      noteTags = tags.split(',').map((tag) => tag.trim());
+    }
 
     const newNote = {
       id: uuidv4(),
+      tags: noteTags,
       content,
     };
 
@@ -55,12 +73,29 @@ const AddNote = () => {
     }, 1000);
 
     setContent('');
+    setTags('');
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <label htmlFor='content'>Add your note here</label>
-      <input type='text' value={content} onChange={handleChange} />
+      <input
+        type='text'
+        value={content}
+        name='content'
+        id='content'
+        onChange={handleChange}
+        placeholder='Text'
+      />
+      <label htmlFor='tags'>Add your tags here</label>
+      <input
+        type='text'
+        value={tags}
+        name='tags'
+        id='tags'
+        onChange={handleChange}
+        placeholder='Tags separated by comma'
+      />
       <Button type='submit' disabled={loading}>
         Add note
       </Button>

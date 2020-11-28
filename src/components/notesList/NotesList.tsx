@@ -47,8 +47,8 @@ const NotesList = () => {
     } else {
       const filteredNotes = filterNotes(notesToRender);
 
-      return filteredNotes.map(({ content, id }) => (
-        <Note key={id} content={content} id={id} />
+      return filteredNotes.map(({ content, id, tags }) => (
+        <Note key={id} content={content} id={id} tags={tags} />
       ));
     }
   };

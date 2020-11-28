@@ -32,9 +32,10 @@ const Button = styled.button`
 interface INote {
   content: string;
   id: string;
+  tags: string[];
 }
 
-const Note = ({ content, id }: INote) => {
+const Note = ({ content, id, tags }: INote) => {
   console.log('content', content);
   const [editing, setEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
@@ -61,6 +62,7 @@ const Note = ({ content, id }: INote) => {
         updateNote({
           content: editContent,
           id,
+          tags,
         });
       }, 1000);
     }
@@ -71,7 +73,13 @@ const Note = ({ content, id }: INote) => {
   };
 
   const renderContent = () => {
-    if (!editing) return <p>{content}</p>;
+    if (!editing)
+      return (
+        <React.Fragment>
+          <p>{content}</p>
+          <p>{tags.map((tag) => `#${tag} `)}</p>
+        </React.Fragment>
+      );
 
     return (
       <form>

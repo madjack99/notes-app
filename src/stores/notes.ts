@@ -3,6 +3,7 @@ import { createStore, createEvent } from 'effector';
 export interface INote {
   content: string;
   id: string;
+  tags: string[];
 }
 
 export const fetchNotes = createEvent<INote[]>();
