@@ -34,7 +34,6 @@ const AddNote = () => {
   let [content, setContent] = useState('');
 
   const loading = useStore($loading);
-  console.log(loading);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -60,7 +59,7 @@ const AddNote = () => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <label htmlFor='content'>Add you note here</label>
+      <label htmlFor='content'>Add your note here</label>
       <input type='text' value={content} onChange={handleChange} />
       <Button type='submit' disabled={loading}>
         Add note

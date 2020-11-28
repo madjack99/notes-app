@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStore } from 'effector-react';
 
-import { deleteNote } from '../../stores/notes';
+import { deleteNote, updateNote } from '../../stores/notes';
 import { startLoading, stopLoading } from '../../stores/loading';
 
 interface INote {
@@ -10,7 +10,12 @@ interface INote {
 }
 
 const Note = ({ content, id }: INote) => {
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+  console.log('content', content);
+  const [editing, setEditing] = useState(false);
+  const [editContent, setEditContent] = useState('');
+  console.log('edit content', editContent);
+
+  const handleDelete = () => {
     startLoading();
 
     setTimeout(() => {
@@ -19,11 +24,42 @@ const Note = ({ content, id }: INote) => {
     }, 1000);
   };
 
+  const handleEdit = () => {
+    if (!editing) {
+      setEditing(true);
+      setEditContent(content);
+    } else {
+      setEditing(false);
+      startLoading();
+      setTimeout(() => {
+        stopLoading();
+        updateNote({
+          content: editContent,
+          id,
+        });
+      }, 1000);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setEditContent(e.target.value);
+  };
+
+  const renderContent = () => {
+    if (!editing) return <p>{content}</p>;
+
+    return (
+      <form>
+        <textarea value={editContent} onChange={handleChange} />
+      </form>
+    );
+  };
+
   return (
     <div>
-      <p>{content}</p>
+      {renderContent()}
       <button onClick={handleDelete}>delete</button>
-      <button>update</button>
+      <button onClick={handleEdit}>update</button>
       <button>pin</button>
     </div>
   );
