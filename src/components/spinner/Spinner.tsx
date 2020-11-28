@@ -3,8 +3,12 @@ import Loader from 'react-loaders';
 
 import './index.scss';
 
-const Spinner = () => {
-  return <Loader type='line-scale' active />;
+interface ISpinner {
+  loading: boolean;
+}
+
+const Spinner = ({ loading }: ISpinner) => {
+  return loading ? <Loader type='line-scale' active /> : null;
 };
 
 export default Spinner;
