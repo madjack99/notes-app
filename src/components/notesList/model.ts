@@ -6,7 +6,7 @@ import {
   apiDeleteNote,
   apiUpdateNote,
   apiTogglePinned,
-} from '../api';
+} from '../../api';
 
 export interface INote {
   content: string;

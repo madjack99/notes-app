@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
-import {
-  deleteNote,
-  updateNote,
-  togglePinned,
-  INote,
-} from '../../stores/notes';
+import { deleteNote, updateNote, togglePinned, INote } from '../notesList';
 import { startLoading, stopLoading } from '../spinner';
 
 const NoteWrapper = styled.div`

@@ -1,4 +1,4 @@
-import { INote } from '../stores/notes';
+import { INote } from '../components/notesList';
 
 export const apiFetchNotes = (store: INote[], fetchedNotes: INote[]) =>
   fetchedNotes;

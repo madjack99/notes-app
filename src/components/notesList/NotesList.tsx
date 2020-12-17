@@ -8,7 +8,7 @@ import AddNote from '../addNote';
 import TextFilter from '../filters/text';
 import TagFilter from '../filters/tag';
 
-import { $notes, fetchNotes, INote } from '../../stores/notes';
+import { $notes, fetchNotes, INote } from './model';
 import { $loading, stopLoading } from '../spinner';
 
 const NotesContainer = styled.div`

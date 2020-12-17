@@ -2,7 +2,7 @@ import React from 'react';
 import { useStore } from 'effector-react';
 import styled from '@emotion/styled';
 
-import { $notes } from '../../../stores/notes';
+import { $notes } from '../../notesList';
 
 const Form = styled.form`
   width: 100%;
