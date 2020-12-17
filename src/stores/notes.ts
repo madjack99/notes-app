@@ -1,5 +1,13 @@
 import { createStore, createEvent } from 'effector';
 
+import {
+  apiFetchNotes,
+  apiAddNote,
+  apiDeleteNote,
+  apiUpdateNote,
+  apiTogglePinned,
+} from '../api';
+
 export interface INote {
   content: string;
   id: string;
@@ -20,28 +28,8 @@ export const togglePinned = createEvent<string>();
 export const $notes = createStore<INote[]>([]);
 
 $notes
-  .on(fetchNotes, (_, fetchedNotes) => fetchedNotes)
-  .on(addNote, (state, newNote) => [...state, newNote])
-  .on(deleteNote, (state, deleteId) => {
-    return state.filter(({ id }) => id !== deleteId);
-  })
-  .on(updateNote, (state, updatedNote) => {
-    return state.map((note) => {
-      if (note.id === updatedNote.id) {
-        return updatedNote;
-      } else {
-        return note;
-      }
-    });
-  })
-  .on(togglePinned, (state, targetNoteId) => {
-    return state.map((note) => {
-      if (note.id === targetNoteId) {
-        return {
-          ...note,
-          pinned: !note.pinned,
-        };
-      }
-      return note;
-    });
-  });
+  .on(fetchNotes, apiFetchNotes)
+  .on(addNote, apiAddNote)
+  .on(deleteNote, apiDeleteNote)
+  .on(updateNote, apiUpdateNote)
+  .on(togglePinned, apiTogglePinned);
