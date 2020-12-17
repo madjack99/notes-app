@@ -7,7 +7,7 @@ import {
   togglePinned,
   INote,
 } from '../../stores/notes';
-import { startLoading, stopLoading } from '../../stores/loading';
+import { startLoading, stopLoading } from '../spinner';
 
 const NoteWrapper = styled.div`
   width: 100%;

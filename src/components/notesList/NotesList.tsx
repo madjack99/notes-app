@@ -9,7 +9,7 @@ import TextFilter from '../filters/text';
 import TagFilter from '../filters/tag';
 
 import { $notes, fetchNotes, INote } from '../../stores/notes';
-import { $loading, stopLoading } from '../../stores/loading';
+import { $loading, stopLoading } from '../spinner';
 
 const NotesContainer = styled.div`
   display: flex;

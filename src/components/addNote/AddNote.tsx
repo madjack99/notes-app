@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useStore } from 'effector-react';
 
 import { addNote } from '../../stores/notes';
-import { $loading, startLoading, stopLoading } from '../../stores/loading';
+import { $loading, startLoading, stopLoading } from '../spinner';
 
 const Form = styled.form`
   display: flex;
