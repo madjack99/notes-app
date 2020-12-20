@@ -14,14 +14,14 @@ const Input = styled.input`
 
 interface ITagFilter {
   filterTagValue: string;
-  setFilterTagValue: (tagValue: string) => void;
+  updateTagFilterValue: (tagValue: string) => void;
 }
 
-const TagFilter = ({ filterTagValue, setFilterTagValue }: ITagFilter) => {
+const TagFilter = ({ filterTagValue, updateTagFilterValue }: ITagFilter) => {
   const notes = useStore($notes);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterTagValue(e.target.value);
+    updateTagFilterValue(e.target.value);
   };
 
   const renderTagFilter = () => {

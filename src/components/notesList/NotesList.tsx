@@ -8,7 +8,15 @@ import AddNote from '../addNote';
 import TextFilter from '../filters/text';
 import TagFilter from '../filters/tag';
 
-import { $notes, fetchNotes, INote } from './model';
+import {
+  $notes,
+  fetchNotes,
+  INote,
+  $filterValue,
+  updateFilterValue,
+  $tagFilterValue,
+  updateTagFilterValue,
+} from './model';
 import { $loading, stopLoading } from '../spinner';
 
 const NotesContainer = styled.div`
@@ -23,9 +31,11 @@ const NotesContainer = styled.div`
 const NotesList = () => {
   let notes = useStore($notes);
   const loading = useStore($loading);
+  const filterValue = useStore($filterValue);
+  const tagFilterValue = useStore($tagFilterValue);
 
-  const [filterValue, setFilterValue] = useState('');
-  const [filterTagValue, setFilterTagValue] = useState('');
+  // const [filterValue, updateFilterValue] = useState('');
+  // const [filterTagValue, setFilterTagValue] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,9 +52,9 @@ const NotesList = () => {
   };
 
   const filterByTags = (notesToFilter: INote[]) => {
-    if (filterTagValue === '') return notesToFilter;
+    if (tagFilterValue === '') return notesToFilter;
 
-    const targetTags = filterTagValue.split(',').map((tag) => tag.trim());
+    const targetTags = tagFilterValue.split(',').map((tag) => tag.trim());
     return notesToFilter.filter((note) => {
       return targetTags.every((targetTag) => {
         return note.tags.includes(targetTag);
@@ -72,10 +82,13 @@ const NotesList = () => {
   return (
     <NotesContainer>
       <AddNote />
-      <TextFilter setFilterValue={setFilterValue} filterValue={filterValue} />
+      <TextFilter
+        updateFilterValue={updateFilterValue}
+        filterValue={filterValue}
+      />
       <TagFilter
-        setFilterTagValue={setFilterTagValue}
-        filterTagValue={filterTagValue}
+        updateTagFilterValue={updateTagFilterValue}
+        filterTagValue={tagFilterValue}
       />
       <Spinner loading={loading} />
       {renderNotesList(notes)}

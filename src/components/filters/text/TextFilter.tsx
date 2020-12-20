@@ -13,15 +13,15 @@ const Input = styled.input`
 `;
 
 interface ITextFilter {
-  setFilterValue: (filterValue: string) => void;
+  updateFilterValue: (filterValue: string) => void;
   filterValue: string;
 }
 
-const TextFilter = ({ setFilterValue, filterValue }: ITextFilter) => {
+const TextFilter = ({ updateFilterValue, filterValue }: ITextFilter) => {
   const notes = useStore($notes);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterValue(e.target.value);
+    updateFilterValue(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
