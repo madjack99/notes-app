@@ -1,4 +1,4 @@
-import { createStore, createEvent, sample } from 'effector';
+import { createStore, createEvent, sample, combine } from 'effector';
 
 import { $filterValue } from '../filters/text';
 import { $tagFilterValue } from '../filters/tag';
@@ -59,5 +59,18 @@ export const $filteredNotesByTags = sample(
         return note.tags.includes(targetTag);
       });
     });
+  }
+);
+
+export const $finalFilterResult = combine(
+  $filteredNotesByText,
+  $filteredNotesByTags,
+  (filteredNotesByText, filteredNotesByTags) => {
+    const combinedArrays = new Set([
+      ...filteredNotesByText,
+      ...filteredNotesByTags,
+    ]);
+    const result = Array.from(combinedArrays);
+    return result;
   }
 );

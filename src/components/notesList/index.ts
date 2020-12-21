@@ -10,6 +10,7 @@ import {
   $filteredNotesByText,
   $filteredNotesByTags,
   INote as noteInterface,
+  $finalFilterResult,
 } from './model';
 
 export default NotesList;
@@ -23,6 +24,7 @@ export {
   $notes,
   $filteredNotesByText,
   $filteredNotesByTags,
+  $finalFilterResult,
 };
 
 export type INote = noteInterface;
