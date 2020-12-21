@@ -8,17 +8,15 @@ import AddNote from '../addNote';
 import TextFilter from '../filters/text';
 import TagFilter from '../filters/tag';
 
-import { $notes, fetchNotes, INote } from './model';
 import {
-  $filterValue,
-  updateFilterValue,
+  $notes,
+  fetchNotes,
+  INote,
   $filteredNotesByText,
-} from '../filters/text';
-import {
-  $tagFilterValue,
-  updateTagFilterValue,
   $filteredNotesByTags,
-} from '../filters/tag';
+} from './model';
+import { $filterValue, updateFilterValue } from '../filters/text';
+import { $tagFilterValue, updateTagFilterValue } from '../filters/tag';
 import { $loading, stopLoading } from '../spinner';
 
 const NotesContainer = styled.div`

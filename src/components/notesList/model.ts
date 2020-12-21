@@ -1,4 +1,7 @@
-import { createStore, createEvent } from 'effector';
+import { createStore, createEvent, sample } from 'effector';
+
+import { $filterValue } from '../filters/text';
+import { $tagFilterValue } from '../filters/tag';
 
 import {
   apiFetchNotes,
@@ -33,3 +36,28 @@ $notes
   .on(deleteNote, apiDeleteNote)
   .on(updateNote, apiUpdateNote)
   .on(togglePinned, apiTogglePinned);
+
+export const $filteredNotesByText = sample(
+  $notes,
+  $filterValue,
+  (notes, filterValue) => {
+    if (filterValue === '') return notes;
+    return notes.filter((note) => {
+      return note.content.includes(filterValue);
+    });
+  }
+);
+
+export const $filteredNotesByTags = sample(
+  $notes,
+  $tagFilterValue,
+  (notes, tagFilterValue) => {
+    if (tagFilterValue === '') return notes;
+    const targetTags = tagFilterValue.split(',').map((tag) => tag.trim());
+    return notes.filter((note) => {
+      return targetTags.every((targetTag) => {
+        return note.tags.includes(targetTag);
+      });
+    });
+  }
+);

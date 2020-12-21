@@ -1,9 +1,5 @@
 import TagFilter from './TagFilter';
-import {
-  $tagFilterValue,
-  updateTagFilterValue,
-  $filteredNotesByTags,
-} from './model';
+import { $tagFilterValue, updateTagFilterValue } from './model';
 
 export default TagFilter;
-export { $tagFilterValue, updateTagFilterValue, $filteredNotesByTags };
+export { $tagFilterValue, updateTagFilterValue };
