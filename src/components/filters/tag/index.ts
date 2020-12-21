@@ -1,5 +1,5 @@
 import TagFilter from './TagFilter';
-import { $tagFilterValue, updateTagFilterValue } from './model';
+import { $tagFilterValue, updateTagFilterValue, $isFilterOn } from './model';
 
 export default TagFilter;
-export { $tagFilterValue, updateTagFilterValue };
+export { $tagFilterValue, updateTagFilterValue, $isFilterOn };

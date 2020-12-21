@@ -6,7 +6,7 @@ import Spinner from '../spinner';
 import Note from '../note';
 import AddNote from '../addNote';
 import TextFilter from '../filters/text';
-import TagFilter from '../filters/tag';
+import TagFilter, { $isFilterOn } from '../filters/tag';
 
 import { $notes, fetchNotes, INote, $finalFilterResult } from './model';
 import { $filterValue, updateFilterValue } from '../filters/text';
@@ -23,11 +23,12 @@ const NotesContainer = styled.div`
 `;
 
 const NotesList = () => {
-  let notes = useStore($notes);
+  const notes = useStore($notes);
   const finalFilterResult = useStore($finalFilterResult);
   const loading = useStore($loading);
   const filterValue = useStore($filterValue);
   const tagFilterValue = useStore($tagFilterValue);
+  const isFilterOn = useStore($isFilterOn);
 
   useEffect(() => {
     setTimeout(() => {
@@ -41,13 +42,14 @@ const NotesList = () => {
       return null;
     } else if (notesToRender.length === 0) {
       return <p>There are no any notes</p>;
-    } else {
-      // const filteredNotes = filterNotes(notesToRender);
-      // const filteredByTags = filterByTags(filteredNotes);
-
+    } else if (isFilterOn) {
       // filteredByTags.sort((a, b) => +a.pinned - +b.pinned).reverse();
 
       return finalFilterResult.map(({ content, id, tags, pinned }) => (
+        <Note key={id} content={content} id={id} tags={tags} pinned={pinned} />
+      ));
+    } else {
+      return notes.map(({ content, id, tags, pinned }) => (
         <Note key={id} content={content} id={id} tags={tags} pinned={pinned} />
       ));
     }
