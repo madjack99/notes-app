@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useStore } from 'effector-react';
 import styled from '@emotion/styled';
 
@@ -8,15 +8,9 @@ import AddNote from '../addNote';
 import TextFilter from '../filters/text';
 import TagFilter from '../filters/tag';
 
-import {
-  $notes,
-  fetchNotes,
-  INote,
-  $filterValue,
-  updateFilterValue,
-  $tagFilterValue,
-  updateTagFilterValue,
-} from './model';
+import { $notes, fetchNotes, INote } from './model';
+import { $filterValue, updateFilterValue } from '../filters/text';
+import { $tagFilterValue, updateTagFilterValue } from '../filters/tag';
 import { $loading, stopLoading } from '../spinner';
 
 const NotesContainer = styled.div`
@@ -33,9 +27,6 @@ const NotesList = () => {
   const loading = useStore($loading);
   const filterValue = useStore($filterValue);
   const tagFilterValue = useStore($tagFilterValue);
-
-  // const [filterValue, updateFilterValue] = useState('');
-  // const [filterTagValue, setFilterTagValue] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
