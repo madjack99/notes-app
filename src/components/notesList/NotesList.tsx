@@ -58,14 +58,8 @@ const NotesList = () => {
   return (
     <NotesContainer>
       <AddNote />
-      <TextFilter
-        updateFilterValue={updateFilterValue}
-        filterValue={filterValue}
-      />
-      <TagFilter
-        updateTagFilterValue={updateTagFilterValue}
-        filterTagValue={tagFilterValue}
-      />
+      <TextFilter />
+      <TagFilter />
       <Spinner loading={loading} />
       {renderNotesList(notes)}
     </NotesContainer>
