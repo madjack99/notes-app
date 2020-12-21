@@ -27,8 +27,6 @@ export const togglePinned = createEvent<string>();
 
 export const $notes = createStore<INote[]>([]);
 
-export const $filteredNotes = createStore(($notes: INote[]) => $notes);
-
 $notes
   .on(fetchNotes, apiFetchNotes)
   .on(addNote, apiAddNote)

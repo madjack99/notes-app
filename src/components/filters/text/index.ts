@@ -1,6 +1,6 @@
 import TextFilter from './TextFilter';
-import { $filterValue, updateFilterValue } from './model';
+import { $filterValue, updateFilterValue, $filteredNotesByText } from './model';
 
 export default TextFilter;
 
-export { $filterValue, updateFilterValue };
+export { $filterValue, updateFilterValue, $filteredNotesByText };
