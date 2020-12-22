@@ -6,33 +6,6 @@ import { useStore } from 'effector-react';
 import { addNote } from '../notesList';
 import { $loading, startLoading, stopLoading } from '../spinner';
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 10px 15px;
-  border: 1px solid black;
-  border-radius: 10px;
-`;
-
-type ButtonProps = {
-  disabled: boolean;
-  type: string;
-};
-
-const Button = styled.button<ButtonProps>`
-  padding: 5px 10px;
-  border: none;
-  background-color: ${(props) => (props.disabled ? '#698690' : '#2993ff')};
-  color: white;
-  cursor: pointer;
-  border-radius: 10px;
-  outline: none;
-  &:hover {
-    background-color: ${(props) => (props.disabled ? '#698690' : '#25DB18')};
-  }
-`;
-
 const AddNote = () => {
   let [content, setContent] = useState('');
   let [tags, setTags] = useState('');
@@ -103,5 +76,32 @@ const AddNote = () => {
     </Form>
   );
 };
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+`;
+
+type ButtonProps = {
+  disabled: boolean;
+  type: string;
+};
+
+const Button = styled.button<ButtonProps>`
+  padding: 5px 10px;
+  border: none;
+  background-color: ${(props) => (props.disabled ? '#698690' : '#2993ff')};
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  outline: none;
+  &:hover {
+    background-color: ${(props) => (props.disabled ? '#698690' : '#25DB18')};
+  }
+`;
 
 export default AddNote;

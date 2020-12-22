@@ -1,7 +1,7 @@
 import NotesList from './NotesList';
 
 import {
-  fetchNotes,
+  fetchNotesFx,
   addNote,
   deleteNote,
   updateNote,
@@ -16,7 +16,7 @@ import {
 export default NotesList;
 
 export {
-  fetchNotes,
+  fetchNotesFx,
   addNote,
   deleteNote,
   updateNote,

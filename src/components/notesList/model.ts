@@ -1,7 +1,14 @@
-import { createStore, createEvent, sample, combine } from 'effector';
+import {
+  createStore,
+  createEvent,
+  createEffect,
+  sample,
+  combine,
+} from 'effector';
 
 import { $filterValue } from '../filters/text';
 import { $tagFilterValue } from '../filters/tag';
+import { stopLoading } from '../spinner';
 
 import {
   apiFetchNotes,
@@ -18,7 +25,11 @@ export interface INote {
   pinned: boolean;
 }
 
-export const fetchNotes = createEvent<INote[]>();
+export const fetchNotesFx = createEffect(async () => {
+  const fetchedNotes = await apiFetchNotes();
+  stopLoading();
+  return fetchedNotes;
+});
 
 export const addNote = createEvent<INote>();
 
@@ -34,7 +45,9 @@ togglePinned.watch(() => rearrangeNotes());
 export const $notes = createStore<INote[]>([]);
 
 $notes
-  .on(fetchNotes, apiFetchNotes)
+  .on(fetchNotesFx.doneData, (_, notes) => {
+    return notes;
+  })
   .on(addNote, apiAddNote)
   .on(deleteNote, apiDeleteNote)
   .on(updateNote, apiUpdateNote)

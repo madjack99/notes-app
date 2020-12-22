@@ -1,7 +1,15 @@
 import { INote } from '../components/notesList';
 
-export const apiFetchNotes = (store: INote[], fetchedNotes: INote[]) =>
-  fetchedNotes;
+// export const apiFetchNotes = (store: INote[], fetchedNotes: INote[]) =>
+//   fetchedNotes;
+
+export const apiFetchNotes = () => {
+  return new Promise<INote[]>((resolve, reject) => {
+    setTimeout(() => {
+      resolve([]);
+    }, 1000);
+  });
+};
 
 export const apiAddNote = (state: INote[], newNote: INote) => [
   ...state,

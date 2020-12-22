@@ -8,8 +8,8 @@ import AddNote from '../addNote';
 import TextFilter from '../filters/text';
 import TagFilter, { $isFilterOn } from '../filters/tag';
 
-import { $notes, fetchNotes, $finalFilterResult, INote } from './model';
-import { $loading, stopLoading } from '../spinner';
+import { $notes, fetchNotesFx, $finalFilterResult, INote } from './model';
+import { $loading } from '../spinner';
 
 const NotesList = () => {
   const notes = useStore($notes);
@@ -18,10 +18,7 @@ const NotesList = () => {
   const isFilterOn = useStore($isFilterOn);
 
   useEffect(() => {
-    setTimeout(() => {
-      stopLoading();
-      fetchNotes([]);
-    }, 1000);
+    fetchNotesFx();
   }, []);
 
   const renderNote = ({ content, id, tags, pinned }: INote) => (
