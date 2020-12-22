@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from '@emotion/styled';
 import { useStore } from 'effector-react';
 
 import { addNote } from '../notesList';
+import { $content, setContent, $tags, setTags } from './model';
 import { $loading, startLoading, stopLoading } from '../spinner';
 
 const AddNote = () => {
-  let [content, setContent] = useState('');
-  let [tags, setTags] = useState('');
-
+  const content = useStore($content);
+  const tags = useStore($tags);
   const loading = useStore($loading);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const { name } = e.target;
+    const { value, name } = e.target;
     if (name === 'content') {
       setContent(value);
     } else {
