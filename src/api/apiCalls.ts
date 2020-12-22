@@ -16,8 +16,12 @@ export const apiAddNote = (newNote: INote) => {
   });
 };
 
-export const apiDeleteNote = (state: INote[], deleteId: string) => {
-  return state.filter(({ id }) => id !== deleteId);
+export const apiDeleteNote = (id: string) => {
+  return new Promise<boolean>((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 1000);
+  });
 };
 
 export const apiUpdateNote = (state: INote[], updatedNote: INote) => {

@@ -26,16 +26,18 @@ export interface INote {
   pinned: boolean;
 }
 
+interface IAddNote {
+  tags: string;
+  content: string;
+}
+
+const NON_EXISTING_ID = '-1';
+
 export const fetchNotesFx = createEffect(async () => {
   const fetchedNotes = await apiFetchNotes();
   stopLoading();
   return fetchedNotes;
 });
-
-interface IAddNote {
-  tags: string;
-  content: string;
-}
 
 export const addNoteFx = createEffect(
   async ({ tags, content }: IAddNote): Promise<INote> => {
@@ -59,7 +61,12 @@ export const addNoteFx = createEffect(
   }
 );
 
-export const deleteNote = createEvent<string>();
+export const deleteNoteFx = createEffect(async (id: string) => {
+  const success = await apiDeleteNote(id);
+  stopLoading();
+  if (success) return id;
+  return NON_EXISTING_ID;
+});
 
 export const updateNote = createEvent<INote>();
 
@@ -77,7 +84,9 @@ $notes
   .on(addNoteFx.doneData, (state, addedNote) => {
     return [...state, addedNote];
   })
-  .on(deleteNote, apiDeleteNote)
+  .on(deleteNoteFx.doneData, (state, deleteId) => {
+    return state.filter(({ id }) => id !== deleteId);
+  })
   .on(updateNote, apiUpdateNote)
   .on(togglePinned, apiTogglePinned)
   .on(rearrangeNotes, (state) => {

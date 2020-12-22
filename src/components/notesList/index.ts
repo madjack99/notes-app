@@ -3,7 +3,7 @@ import NotesList from './NotesList';
 import {
   fetchNotesFx,
   addNoteFx,
-  deleteNote,
+  deleteNoteFx,
   updateNote,
   togglePinned,
   $notes,
@@ -18,7 +18,7 @@ export default NotesList;
 export {
   fetchNotesFx,
   addNoteFx,
-  deleteNote,
+  deleteNoteFx,
   updateNote,
   togglePinned,
   $notes,
