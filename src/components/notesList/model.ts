@@ -26,7 +26,10 @@ export const deleteNote = createEvent<string>();
 
 export const updateNote = createEvent<INote>();
 
+const rearrangeNotes = createEvent();
+
 export const togglePinned = createEvent<string>();
+togglePinned.watch(() => rearrangeNotes());
 
 export const $notes = createStore<INote[]>([]);
 
@@ -35,7 +38,10 @@ $notes
   .on(addNote, apiAddNote)
   .on(deleteNote, apiDeleteNote)
   .on(updateNote, apiUpdateNote)
-  .on(togglePinned, apiTogglePinned);
+  .on(togglePinned, apiTogglePinned)
+  .on(rearrangeNotes, (state) => {
+    state.sort((a, b) => +a.pinned - +b.pinned).reverse();
+  });
 
 export const $filteredNotesByText = sample(
   $notes,
