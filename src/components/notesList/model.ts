@@ -5,6 +5,7 @@ import {
   sample,
   combine,
 } from 'effector';
+import { v4 as uuidv4 } from 'uuid';
 
 import { $filterValue } from '../filters/text';
 import { $tagFilterValue } from '../filters/tag';
@@ -31,7 +32,32 @@ export const fetchNotesFx = createEffect(async () => {
   return fetchedNotes;
 });
 
-export const addNote = createEvent<INote>();
+interface IAddNote {
+  tags: string;
+  content: string;
+}
+
+export const addNoteFx = createEffect(
+  async ({ tags, content }: IAddNote): Promise<INote> => {
+    let noteTags: string[];
+    if (tags === '') {
+      noteTags = [];
+    } else {
+      noteTags = tags.split(',').map((tag) => tag.trim());
+    }
+
+    const newNote = {
+      id: uuidv4(),
+      tags: noteTags,
+      pinned: false,
+      content,
+    };
+
+    const addedNote = await apiAddNote(newNote);
+    stopLoading();
+    return addedNote;
+  }
+);
 
 export const deleteNote = createEvent<string>();
 
@@ -48,7 +74,9 @@ $notes
   .on(fetchNotesFx.doneData, (_, notes) => {
     return notes;
   })
-  .on(addNote, apiAddNote)
+  .on(addNoteFx.doneData, (state, addedNote) => {
+    return [...state, addedNote];
+  })
   .on(deleteNote, apiDeleteNote)
   .on(updateNote, apiUpdateNote)
   .on(togglePinned, apiTogglePinned)

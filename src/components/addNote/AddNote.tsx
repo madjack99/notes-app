@@ -1,11 +1,10 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import styled from '@emotion/styled';
 import { useStore } from 'effector-react';
 
-import { addNote } from '../notesList';
+import { addNoteFx } from '../notesList';
 import { $content, setContent, $tags, setTags } from './model';
-import { $loading, startLoading, stopLoading } from '../spinner';
+import { $loading, startLoading } from '../spinner';
 
 const AddNote = () => {
   const content = useStore($content);
@@ -25,26 +24,7 @@ const AddNote = () => {
     e.preventDefault();
     if (content === '') return;
     startLoading();
-
-    let noteTags: string[];
-    if (tags === '') {
-      noteTags = [];
-    } else {
-      noteTags = tags.split(',').map((tag) => tag.trim());
-    }
-
-    const newNote = {
-      id: uuidv4(),
-      tags: noteTags,
-      pinned: false,
-      content,
-    };
-
-    setTimeout(() => {
-      stopLoading();
-      addNote(newNote);
-    }, 1000);
-
+    addNoteFx({ tags, content });
     setContent('');
     setTags('');
   };
