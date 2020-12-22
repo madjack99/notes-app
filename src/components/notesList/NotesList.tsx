@@ -8,26 +8,13 @@ import AddNote from '../addNote';
 import TextFilter from '../filters/text';
 import TagFilter, { $isFilterOn } from '../filters/tag';
 
-import { $notes, fetchNotes, INote, $finalFilterResult } from './model';
-import { $filterValue, updateFilterValue } from '../filters/text';
-import { $tagFilterValue, updateTagFilterValue } from '../filters/tag';
+import { $notes, fetchNotes, $finalFilterResult, INote } from './model';
 import { $loading, stopLoading } from '../spinner';
-
-const NotesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  max-width: 75%;
-  margin: 10px auto;
-`;
 
 const NotesList = () => {
   const notes = useStore($notes);
   const finalFilterResult = useStore($finalFilterResult);
   const loading = useStore($loading);
-  const filterValue = useStore($filterValue);
-  const tagFilterValue = useStore($tagFilterValue);
   const isFilterOn = useStore($isFilterOn);
 
   useEffect(() => {
@@ -37,21 +24,19 @@ const NotesList = () => {
     }, 1000);
   }, []);
 
-  const renderNotesList = (notesToRender: INote[]) => {
+  const renderNote = ({ content, id, tags, pinned }: INote) => (
+    <Note key={id} content={content} id={id} tags={tags} pinned={pinned} />
+  );
+
+  const renderNotesList = () => {
     if (loading) {
       return null;
-    } else if (notesToRender.length === 0) {
+    } else if (notes.length === 0) {
       return <p>There are no any notes</p>;
     } else if (isFilterOn) {
-      // filteredByTags.sort((a, b) => +a.pinned - +b.pinned).reverse();
-
-      return finalFilterResult.map(({ content, id, tags, pinned }) => (
-        <Note key={id} content={content} id={id} tags={tags} pinned={pinned} />
-      ));
+      return finalFilterResult.map((note) => renderNote(note));
     } else {
-      return notes.map(({ content, id, tags, pinned }) => (
-        <Note key={id} content={content} id={id} tags={tags} pinned={pinned} />
-      ));
+      return notes.map((note) => renderNote(note));
     }
   };
 
@@ -61,9 +46,18 @@ const NotesList = () => {
       <TextFilter />
       <TagFilter />
       <Spinner loading={loading} />
-      {renderNotesList(notes)}
+      {renderNotesList()}
     </NotesContainer>
   );
 };
+
+const NotesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  max-width: 75%;
+  margin: 10px auto;
+`;
 
 export default NotesList;

@@ -5,14 +5,6 @@ import styled from '@emotion/styled';
 import { $notes } from '../../notesList';
 import { $filterValue, updateFilterValue } from './model';
 
-const Form = styled.form`
-  width: 100%;
-`;
-
-const Input = styled.input`
-  width: 100%;
-`;
-
 const TextFilter = () => {
   const notes = useStore($notes);
   const filterValue = useStore($filterValue);
@@ -42,5 +34,13 @@ const TextFilter = () => {
 
   return renderFilter();
 };
+
+const Form = styled.form`
+  width: 100%;
+`;
+
+const Input = styled.input`
+  width: 100%;
+`;
 
 export default TextFilter;
