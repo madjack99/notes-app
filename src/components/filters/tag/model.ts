@@ -12,8 +12,6 @@ export const $isFilterOn = combine(
   $tagFilterValue,
   $filterValue,
   (tagFilterValue, filterValue) => {
-    console.log($tagFilterValue, $filterValue);
-
     return !!tagFilterValue || !!filterValue;
   }
 );

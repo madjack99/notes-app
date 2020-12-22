@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
-import { deleteNoteFx, updateNote, togglePinned, INote } from '../notesList';
-import { startLoading, stopLoading } from '../spinner';
+import { deleteNoteFx, updateNoteFx, togglePinned, INote } from '../notesList';
+import { startLoading } from '../spinner';
 
 const NoteWrapper = styled.div`
   width: 100%;
@@ -54,15 +54,13 @@ const Note = ({ content, id, tags, pinned }: INote) => {
     } else {
       setEditing(false);
       startLoading();
-      setTimeout(() => {
-        stopLoading();
-        updateNote({
-          content: editContent,
-          id,
-          tags,
-          pinned,
-        });
-      }, 1000);
+
+      updateNoteFx({
+        content: editContent,
+        id,
+        tags,
+        pinned,
+      });
     }
   };
 

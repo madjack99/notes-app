@@ -24,13 +24,11 @@ export const apiDeleteNote = (id: string) => {
   });
 };
 
-export const apiUpdateNote = (state: INote[], updatedNote: INote) => {
-  return state.map((note) => {
-    if (note.id === updatedNote.id) {
-      return updatedNote;
-    } else {
-      return note;
-    }
+export const apiUpdateNote = (updatedNote: INote) => {
+  return new Promise<boolean>((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 1000);
   });
 };
 

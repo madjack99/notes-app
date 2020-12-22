@@ -68,7 +68,11 @@ export const deleteNoteFx = createEffect(async (id: string) => {
   return NON_EXISTING_ID;
 });
 
-export const updateNote = createEvent<INote>();
+export const updateNoteFx = createEffect(async (updatedNote: INote) => {
+  const success = await apiUpdateNote(updatedNote);
+  stopLoading();
+  return { success, updatedNote };
+});
 
 const rearrangeNotes = createEvent();
 
@@ -87,7 +91,16 @@ $notes
   .on(deleteNoteFx.doneData, (state, deleteId) => {
     return state.filter(({ id }) => id !== deleteId);
   })
-  .on(updateNote, apiUpdateNote)
+  .on(updateNoteFx.doneData, (state, payload) => {
+    const { success, updatedNote } = payload;
+    if (success) {
+      return state.map((note) =>
+        note.id === updatedNote.id ? updatedNote : note
+      );
+    } else {
+      return state;
+    }
+  })
   .on(togglePinned, apiTogglePinned)
   .on(rearrangeNotes, (state) => {
     state.sort((a, b) => +a.pinned - +b.pinned).reverse();
